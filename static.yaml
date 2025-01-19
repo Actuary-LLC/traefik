@@ -1,0 +1,74 @@
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":80"
+    #address: "[::]:80" 
+    #ipv6: true
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    #ipv6: true
+    address: ":443"
+    #address: "[::]:443" 
+  steamcmd_udp:
+    address: ":8211/udp"
+  factorio:
+    address: ":34197/udp"
+  mqtt:
+    address: ":1883"
+
+metrics:
+  addInternals: true
+
+tracing:
+  addInternals: true
+
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: alex@actuary.llc
+      storage: /mnt/user/docker/volumes/traefik/letsencrypt/acme.json
+      #tlsChallenge: true
+      dnsChallenge:
+        provider: cloudflare
+        delayBeforeCheck: 90
+        disablePropagationCheck: true
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+       caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+        
+log:
+#  filePath: /mnt/user/docker/volumes/traefik/logs/traefik.log
+  level: DEBUG
+accessLog:
+#  filePath: /mnt/user/docker/volumes/traefik/logs/access.log
+  addInternals: true
+  fields:
+    defaultMode: keep
+    names:
+      ClientUsername: drop
+    headers:
+      defaultMode: keep
+      names:
+        User-Agent: keep
+        Authorization: keep
+        Content-Type: keep
+
+providers:
+  swarm:
+    exposedByDefault: false
+    watch: true
+    network: "reverse-proxy"
+    endpoint: "unix:///var/run/docker.sock"
+  file:
+    filename: /mnt/user/docker/volumes/traefik/dynamic/config.yaml
+    watch: true
