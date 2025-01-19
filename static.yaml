@@ -17,6 +17,10 @@ entryPoints:
     #ipv6: true
     address: ":443"
     #address: "[::]:443" 
+    forwardedHeaders:
+      trustedIPs:
+        - "192.168.1.0/24"   # Example: Internal reverse proxy
+        - "10.200.22.0/24"   # VPN IP range (if Traefik itself should trust VPN forwarded headers)
   steamcmd_udp:
     address: ":8211/udp"
   factorio:
