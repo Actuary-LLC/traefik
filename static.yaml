@@ -37,6 +37,7 @@ certificatesResolvers:
       email: alex@actuary.llc
       storage: /mnt/user/docker/volumes/traefik/letsencrypt/acme.json
       #tlsChallenge: true
+      caserver: https://acme-staging-v02.api.letsencrypt.org/directory
       dnsChallenge:
         provider: cloudflare
         delayBeforeCheck: 90
@@ -44,7 +45,6 @@ certificatesResolvers:
         resolvers:
           - "1.1.1.1:53"
           - "8.8.8.8:53"
-       caserver: https://acme-staging-v02.api.letsencrypt.org/directory
         
 log:
 #  filePath: /mnt/user/docker/volumes/traefik/logs/traefik.log
