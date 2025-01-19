@@ -1,0 +1,21 @@
+name: 'traefik'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  traefik:
+    runs-on: [coral]
+    env:
+      TAG: ${{ github.sha }}
+      CF_DNS_API_TOKEN: "${{ secrets.CF_DNS_API_TOKEN }}"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: Actuary-LLC/traefik
+          ref: main
+      - name: Update traefik stack
+        run: |
+          docker stack deploy -c traefik.yaml traefik
