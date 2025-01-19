@@ -1,0 +1,59 @@
+version: '3.9'
+
+networks:
+  reverse-proxy:
+    driver: overlay
+    external: true
+configs:
+  static:
+    name: static_configuration_${TAG}
+    file: ./static.yaml
+    
+services:
+  main:
+    hostname: traefik
+    image: traefik:3.2
+    environment:
+      CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
+    command:
+      - "--configFile=/etc/traefik/static.yaml"
+    configs:
+      - source: static
+        target: /etc/traefik/static.yaml
+    ports:
+      - "80:80"
+      - "443:443"
+      - "34197:34197/udp"
+      - "8211:8211/udp"
+      - "8211:8211"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/user/docker/volumes/traefik/:/mnt/user/docker/volumes/traefik/
+    networks:
+      - reverse-proxy
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.reverse-proxy_traefik.loadbalancer.server.port=80"
+        - "traefik.http.services.reverse-proxy_traefik.loadbalancer.server.port=443"
+        - "traefik.http.services.reverse-proxy_traefik.loadbalancer.server.port=8080" #Necessary for access to the web console
+        - "traefik.swarm.network=reverse-proxy"
+        ## Homepage
+        - homepage.group=Security
+        - homepage.name=Traefik
+        - homepage.icon=traefik.png
+        - homepage.href=http://192.168.2.3:8080
+        - homepage.description=Reverse Proxy
+        - homepage.widget.type=traefik
+        - homepage.widget.url=http://192.168.2.3:8080
+        #- homepage.widget.key=${HOMEPAGE_API_TOKEN}
+        #- homepage.widget.fields=["users"]
+        ## DIUN
+        - diun.enable=true
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
