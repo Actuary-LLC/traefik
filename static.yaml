@@ -51,7 +51,7 @@ certificatesResolvers:
         
 log:
 #  filePath: /mnt/user/docker/volumes/traefik/logs/traefik.log
-  level: DEBUG
+#  level: DEBUG
 accessLog:
 #  filePath: /mnt/user/docker/volumes/traefik/logs/access.log
   addInternals: true
