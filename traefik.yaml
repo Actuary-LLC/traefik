@@ -12,7 +12,7 @@ configs:
 services:
   main:
     hostname: traefik
-    image: traefik:3.2
+    image: traefik:3.3
     environment:
       CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
     command:
