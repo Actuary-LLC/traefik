@@ -39,6 +39,9 @@ services:
         - "traefik.http.services.reverse-proxy_traefik.loadbalancer.server.port=443"
         - "traefik.http.services.reverse-proxy_traefik.loadbalancer.server.port=8080" #Necessary for access to the web console
         - "traefik.swarm.network=reverse-proxy"
+        - "traefik.http.routers.dashboard.rule=Host(`traefik.actuary.dev`) || (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+        - "traefik.http.routers.dashboard.entrypoints=lan"
+        - "traefik.http.routers.dashboard.service=api@internal"
         ## Homepage
         - homepage.group=Security
         - homepage.name=Traefik
