@@ -26,7 +26,7 @@ services:
       - "34197:34197/udp"
       - "8211:8211/udp"
       - "8211:8211"
-      #- "8080:8080"
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/user/docker/volumes/traefik/:/mnt/user/docker/volumes/traefik/
