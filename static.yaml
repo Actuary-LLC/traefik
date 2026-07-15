@@ -4,10 +4,18 @@ api:
 
 entryPoints:
   lan:
-    address: ":8080"  
+    address: ":8080"
+    transport:
+      lifeCycle:
+        requestAcceptGraceTimeout: 30s
+        graceTimeOut: 30s
+      respondingTimeouts:
+        readTimeout: 60s
+        writeTimeout: 60s
+        idleTimeout: 300s
   web:
     address: ":80"
-    #address: "[::]:80" 
+    #address: "[::]:80"
     #ipv6: true
     #http:
      # redirections:
@@ -15,14 +23,32 @@ entryPoints:
        #   to: websecure
         #  scheme: https
          # permanent: true
+    transport:
+      lifeCycle:
+        requestAcceptGraceTimeout: 30s
+        graceTimeOut: 30s
+      respondingTimeouts:
+        readTimeout: 60s
+        writeTimeout: 60s
+        idleTimeout: 300s
   websecure:
     #ipv6: true
     address: ":443"
-    #address: "[::]:443" 
+    #address: "[::]:443"
+    http2:
+      maxConcurrentStreams: 250
     forwardedHeaders:
       trustedIPs:
         - "192.168.1.0/24"   # Example: Internal reverse proxy
         - "10.200.22.0/24"   # VPN IP range (if Traefik itself should trust VPN forwarded headers)
+    transport:
+      lifeCycle:
+        requestAcceptGraceTimeout: 30s
+        graceTimeOut: 30s
+      respondingTimeouts:
+        readTimeout: 60s
+        writeTimeout: 120s
+        idleTimeout: 300s
   steamcmd_udp:
     address: ":8211/udp"
   factorio:
@@ -34,6 +60,13 @@ metrics:
   addInternals: true
 
 tracing:
+
+serversTransport:
+  forwardingTimeouts:
+    dialTimeout: 30s
+    responseHeaderTimeout: 60s
+    idleConnTimeout: 300s
+  maxIdleConnsPerHost: 100
   addInternals: true
 
 
