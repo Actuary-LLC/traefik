@@ -60,6 +60,13 @@ metrics:
   addInternals: true
 
 tracing:
+
+serversTransport:
+  forwardingTimeouts:
+    dialTimeout: 30s
+    responseHeaderTimeout: 60s
+    idleConnTimeout: 300s
+  maxIdleConnsPerHost: 100
   addInternals: true
 
 
