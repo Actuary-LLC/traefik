@@ -1,18 +1,18 @@
 api:
   dashboard: true
-  insecure: false
+  insecure: true
 
 entryPoints:
-  lan:
-    address: ":8080"
-    transport:
-      lifeCycle:
-        requestAcceptGraceTimeout: 30s
-        graceTimeOut: 30s
-      respondingTimeouts:
-        readTimeout: 60s
-        writeTimeout: 60s
-        idleTimeout: 300s
+  #lan:
+  #  address: ":8080"
+  #  transport:
+  #    lifeCycle:
+  #      requestAcceptGraceTimeout: 30s
+  #      graceTimeOut: 30s
+  #    respondingTimeouts:
+  #      readTimeout: 60s
+  #      writeTimeout: 60s
+  #      idleTimeout: 300s
   web:
     address: ":80"
     #address: "[::]:80"
