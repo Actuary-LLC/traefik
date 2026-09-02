@@ -8,6 +8,9 @@ configs:
   static:
     name: static_configuration_${TAG}
     file: ./static.yaml
+  dynamic:
+    name: dynamic_configuration_${TAG}
+    file: ./dynamic.yaml
     
 services:
   main:
