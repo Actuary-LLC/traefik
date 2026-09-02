@@ -23,6 +23,8 @@ services:
     configs:
       - source: static
         target: /etc/traefik/static.yaml
+      - source: dynamic
+        target: /etc/traefik/dynamic/config.yaml
     ports:
       - "80:80"
       - "443:443"
