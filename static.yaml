@@ -107,5 +107,5 @@ providers:
     network: "reverse-proxy"
     endpoint: "unix:///var/run/docker.sock"
   file:
-    filename: /mnt/user/docker/volumes/traefik/dynamic/config.yaml
+    filename: /etc/traefik/dynamic/config.yaml
     watch: true

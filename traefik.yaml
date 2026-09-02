@@ -8,6 +8,9 @@ configs:
   static:
     name: static_configuration_${TAG}
     file: ./static.yaml
+  dynamic:
+    name: dynamic_configuration_${TAG}
+    file: ./dynamic.yaml
     
 services:
   main:
@@ -20,6 +23,8 @@ services:
     configs:
       - source: static
         target: /etc/traefik/static.yaml
+      - source: dynamic
+        target: /etc/traefik/dynamic/config.yaml
     ports:
       - "80:80"
       - "443:443"
