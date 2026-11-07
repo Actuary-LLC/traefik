@@ -80,8 +80,7 @@ certificatesResolvers:
       # certs (and renewals) are issued over 443 without any Cloudflare
       # dependency. Port 80 is not reachable from the internet; http-01 below
       # stays as an in-network fallback. dns-01 remains for wildcard certs.
-      tlsChallenge:
-        entryPoint: websecure
+      tlsChallenge: {}
       # HTTP-01 via the public 'web' entrypoint (port 80).
       httpChallenge:
         entryPoint: web
