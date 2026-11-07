@@ -75,6 +75,11 @@ certificatesResolvers:
       email: alex@actuary.llc
       storage: /mnt/user/docker/volumes/traefik/letsencrypt/acme.json
       #caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+      # HTTP-01 via the public 'web' entrypoint (port 80). lego prefers
+      # http-01 over dns-01 for non-wildcard domains, so regular certs and
+      # renewals work even if the Cloudflare DNS-01 path is unavailable.
+      httpChallenge:
+        entryPoint: web
       dnsChallenge:
         provider: cloudflare
         delayBeforeCheck: 90
