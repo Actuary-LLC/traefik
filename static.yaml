@@ -75,9 +75,15 @@ certificatesResolvers:
       email: alex@actuary.llc
       storage: /mnt/user/docker/volumes/traefik/letsencrypt/acme.json
       #caserver: https://acme-staging-v02.api.letsencrypt.org/directory
-      # TLS-ALPN-01 on the public 'websecure' entrypoint (port 443)
+      # TLS-ALPN-01 on TLS entrypoints (traefik v3 syntax: tlsChallenge takes
+      # no fields -- the challenge is served automatically on all TLS
+      # entrypoints). lego's preference order is tls-alpn-01 > http-01 >
+      # dns-01, so non-wildcard certs and renewals are issued over 443
+      # without any Cloudflare dependency. Port 80 is not reachable from the
+      # internet, so http-01 below is an in-network fallback only; dns-01
+      # remains for wildcard certs (*.coder.actuary.dev).
       tlsChallenge: {}
-      # HTTP-01 via the public 'web' entrypoint (port 80).
+      # HTTP-01 via the 'web' entrypoint (port 80).
       httpChallenge:
         entryPoint: web
       dnsChallenge:
