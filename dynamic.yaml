@@ -25,3 +25,13 @@ http:
         sourceRange:
           - "10.0.0.0/8"
           - "192.168.0.0/16"
+    # Restrict access to LAN / private networks only (RFC1918 + loopback).
+    # LAN clients are NAT'd behind the gateway (10.0.0.2) so they match these
+    # ranges; WAN-forwarded traffic arrives with a public source IP and is denied.
+    lan-only:
+      ipAllowList:
+        sourceRange:
+          - "10.0.0.0/8"
+          - "172.16.0.0/12"
+          - "192.168.0.0/16"
+          - "127.0.0.1/32"
